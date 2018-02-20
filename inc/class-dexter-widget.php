@@ -12,7 +12,7 @@ class Dexter_widget extends WP_Widget{
 		parent::__construct(
 			'dexter_widget',
 			esc_html( 'Dexter' ),
-			array( 'description' => 'Displays Pokemon data on your site! ')
+			array( 'description' => 'Display Pokemon data on your site! ' )
 		);
 	}
 	public static function register() {
