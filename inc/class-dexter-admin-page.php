@@ -12,7 +12,6 @@ class Dexter_admin{
 		add_action( 'admin_menu', array( $this, 'admin_menus' ) );
 		add_action( 'admin_head', array( $this, 'add_styles' ) );
 	}
-	
 	public function admin_menus() {
 		add_menu_page(
 			'Dexter Admin page',
@@ -22,17 +21,15 @@ class Dexter_admin{
 			array( $this, 'admin_main_page' )
 		);
 	}
-	
 	public function add_styles() {
 		wp_enqueue_style( 'dexter_backend_css', plugins_url( 'wp-dexter/css/wp-dexter-styles.css' ) );
 	}
 	public function admin_main_page() {
 		
 		self::admin_header();
-		self::pokemon_meta_box();
+		Pokemon_Metabox::display_full_metabox();
 		$this->dexter_admin_settings();
 	}
-	
 	public static function admin_header() {
 	?>
 		<div class="wrapper">
@@ -41,25 +38,6 @@ class Dexter_admin{
 		</div>
 	<?php
 	}
-	
-	public static function pokemon_meta_box() {
-		global $dexter_api;
-		
-		$pokemon_data = $dexter_api->get_pokemon_data();
-	?>
-		<div class="postbox pokepostbox">
-			<h3>Pokemon:</h3>
-			<img src="<?php echo $pokemon_data->{'sprites'}->{'back_default'}; ?>">
-			<img src="<?php echo $pokemon_data->{'sprites'}->{'front_default'}; ?>">
-			<p>Name: <?php echo $pokemon_data->{'name'}; ?></p>
-			<p>Number: <?php echo $pokemon_data->{'id'}; ?></p>
-			<p>Type: <?php echo $pokemon_data->{'types'}[0]->{'type'}->{'name'}; ?></p>
-			<p>Weight: <?php echo $pokemon_data->{'weight'}; ?></p>
-			<p>Height: <?php echo $pokemon_data->{'height'}; ?></p>
-		</div>
-	<?php
-	}
-	
 	public function dexter_admin_settings() {
 		if ( isset( $_POST['pokemon_generation'] ) ) {
 			$pokemon_generation = $_POST['pokemon_generation'];
@@ -73,7 +51,7 @@ class Dexter_admin{
 			</div>
 			<form name="dexter_options" method="post" action="">
 				<div class="form-field">
-					<p>Currently picking up from: <span class="pokebold"><?php echo esc_html( get_option( 'wp_dexter_pokemon_generation' ) . 'pokemon' ); ?></span></p>
+					<p>Currently picking up from: <span class="pokebold"><?php echo esc_html( get_option( 'wp_dexter_pokemon_generation' ) . ' Pokemon' ); ?></span></p>
 					<label for="pokemon_generation"> Show until which generation? </label>
 					<select name="pokemon_generation">
 						<option value="151">1st Gen</option>

@@ -14,10 +14,11 @@ Version: 1.6
 Author URI: http://ma.tt/
 */
 
-require_once ('inc/class-dexter-api.php');
-require_once ('inc/class-dexter.php');
-require_once ('inc/class-dexter-widget.php');
-require_once ('inc/class-dexter-admin-page.php');
+require_once( 'inc/class-dexter-api.php' );
+require_once( 'inc/class-pokemon-metabox.php' );
+require_once( 'inc/class-dexter.php' );
+require_once( 'inc/class-dexter-widget.php' );
+require_once( 'inc/class-dexter-admin-page.php' );
 
 add_action( 'plugins_loaded', array( 'Dexter_plugin', 'load' ) );
 add_action( 'widgets_init', array( 'Dexter_widget', 'register' ) );
