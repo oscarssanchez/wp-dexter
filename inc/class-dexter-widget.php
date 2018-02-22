@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: oscar
- * Date: 15/02/18
- * Time: 04:24 PM
+ * The widget class
  */
 
 class Dexter_widget extends WP_Widget{
