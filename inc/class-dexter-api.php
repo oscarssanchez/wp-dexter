@@ -1,21 +1,26 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: oscar
- * Date: 14/02/18
- * Time: 08:42 PM
+ * The API class for wp-dexter
+ *
+ * Powered by http://pokeapi.co as the data source
  */
 
 class Dexter_api{
+	/**
+	 * @var string $api_url The URL where we request the pokemon data from.
+	 */
 	protected $api_url = 'http://pokeapi.co/api/v2/pokemon';
 	
-	public function __construct() {
-	}
-	
+	/**
+	 * Retrieves all the pokemon data.
+	 *
+	 * @return array|mixed|object
+	 */
 	public function get_pokemon_data() {
+		//Fetches if there's custom settings to show from.
 		$pokemon_generation = get_option( 'wp_dexter_pokemon_generation' );
-		//Set initial pokemon data
-		if ( false == $pokemon_generation ) {
+		//Sets initial pokemon data if not.
+		if ( ! $pokemon_generation ) {
 			$pokemon_generation = 251;
 			update_option( 'wp_dexter_pokemon_generation', $pokemon_generation );
 		}

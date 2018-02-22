@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: oscar
- * Date: 14/02/18
- * Time: 08:42 PM
+ * The main plugin class
  */
 
 class Dexter_plugin{

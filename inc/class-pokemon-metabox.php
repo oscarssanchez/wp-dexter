@@ -1,11 +1,12 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: oscar
- * Date: 20/02/18
- * Time: 07:30 PM
+ * The Metabox Class
  */
+
 class Pokemon_Metabox {
+	/**
+	 * Displays the basic pokemon data
+	 */
 	public static function display_meta_box() {
 		global $dexter_api;
 		$pokemon_data = $dexter_api->get_pokemon_data();
@@ -17,6 +18,9 @@ class Pokemon_Metabox {
 			<p>Name: <?php echo $pokemon_data->{'name'}; ?></p>
 		<?php
 	}
+	/**
+	 * Displays all pokemon data
+	 */
 	public static function display_full_metabox() {
 		self::display_meta_box();
 		self::show_number();
@@ -25,6 +29,9 @@ class Pokemon_Metabox {
 		self::show_weight();
 		self::metabox_footer();
 	}
+	/**
+	 * Displays the pokemon number
+	 */
 	public  static function show_number() {
 		global $dexter_api;
 		$pokemon_data = $dexter_api->get_pokemon_data();
@@ -32,6 +39,9 @@ class Pokemon_Metabox {
 		<p>Number: <?php echo $pokemon_data->{'id'}; ?></p>
 		<?php
 	}
+	/**
+	 * Displays the pokemon height
+	 */
 	public static function show_height() {
 		global $dexter_api;
 		$pokemon_data = $dexter_api->get_pokemon_data();
@@ -39,6 +49,9 @@ class Pokemon_Metabox {
 		<p>Height: <?php echo $pokemon_data->{'height'}; ?></p>
 		<?php
 	}
+	/**
+	 * Displays the pokemon weight
+	 */
 	public static  function show_weight() {
 		global $dexter_api;
 		$pokemon_data = $dexter_api->get_pokemon_data();
@@ -46,6 +59,9 @@ class Pokemon_Metabox {
 		<p>Weight: <?php echo $pokemon_data->{'weight'}; ?></p>
 		<?php
 	}
+	/**
+	 * Displays the pokemon type
+	 */
 	public static function show_type() {
 		global $dexter_api;
 		$pokemon_data = $dexter_api->get_pokemon_data();

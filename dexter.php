@@ -1,18 +1,16 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: oscar
- * Date: 14/02/18
- * Time: 08:41 PM
+ * Plugin Name: wp-dexter
+ * Description: The useful pokemon encyclopedia now on your WordPress website. Uses pokéAPI.
+ * Plugin URI: https://github.com/oscarssanchez/wp-dexter
+ * Author: Oscar Sánchez
+ * Author URI: https://oscarssanchez.com
+ * Version: 1.0
+ * License: GPLv2 or later
  */
-/*
-Plugin Name: Dexter
-Plugin URI: http://wordpress.org/plugins/hello-dolly/
-Description: Dexter is a PokePlugin for Pokemon fans
-Author: Oscar Sanchez
-Version: 1.6
-Author URI: http://ma.tt/
-*/
+
+/** Prevent direct access to the file **/
+defined( 'ABSPATH' ) or die( 'Access denied' );
 
 require_once( 'inc/class-dexter-api.php' );
 require_once( 'inc/class-pokemon-metabox.php' );

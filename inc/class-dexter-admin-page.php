@@ -1,35 +1,47 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: oscar
- * Date: 14/02/18
- * Time: 08:42 PM
+ * wp-dexter admin area
  */
 
 class Dexter_admin{
-	
+	/**
+	 * Constructor
+	 */
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'admin_menus' ) );
 		add_action( 'admin_head', array( $this, 'add_styles' ) );
 	}
+	/**
+	 * Creates the admin menus for the plugin
+	 */
 	public function admin_menus() {
 		add_menu_page(
 			'Dexter Admin page',
 			'Dexter',
 			'manage_options',
 			'wp-dexter',
-			array( $this, 'admin_main_page' )
+			array( $this, 'admin_main_page' ),
+			'dashicons-smartphone'
 		);
 	}
+	/**
+	 * Enqueues the CSS stylesheet
+	 */
 	public function add_styles() {
 		wp_enqueue_style( 'dexter_backend_css', plugins_url( 'wp-dexter/css/wp-dexter-styles.css' ) );
 	}
+	/**
+	 * Renders the main page
+	 */
 	public function admin_main_page() {
-		
 		self::admin_header();
+		//Renders the Pokemon Metabox with all display options enabled.
 		Pokemon_Metabox::display_full_metabox();
 		$this->dexter_admin_settings();
 	}
+	/**
+	 * Renders the header of the admin area
+	 */
 	public static function admin_header() {
 	?>
 		<div class="wrapper">
@@ -38,6 +50,9 @@ class Dexter_admin{
 		</div>
 	<?php
 	}
+	/**
+	 * Renders the admin settings
+	 */
 	public function dexter_admin_settings() {
 		if ( isset( $_POST['pokemon_generation'] ) ) {
 			$pokemon_generation = $_POST['pokemon_generation'];
