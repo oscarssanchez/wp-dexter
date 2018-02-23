@@ -28,7 +28,7 @@ class Dexter_admin{
 	 * Enqueues the CSS stylesheet
 	 */
 	public function add_styles() {
-		wp_enqueue_style( 'dexter_backend_css', plugins_url( 'wp-dexter/css/wp-dexter-styles.css' ) );
+		wp_enqueue_style( 'dexter_backend_css', plugins_url( '../css/wp-dexter-styles.css', __FILE__ ) );
 	}
 	/**
 	 * Renders the main page
@@ -37,7 +37,7 @@ class Dexter_admin{
 		self::admin_header();
 		//Renders the Pokemon Metabox with all display options enabled.
 		Pokemon_Metabox::display_full_metabox();
-		$this->dexter_admin_settings();
+		$this->admin_form_settings();
 	}
 	/**
 	 * Renders the header of the admin area
@@ -53,18 +53,15 @@ class Dexter_admin{
 	/**
 	 * Renders the admin settings
 	 */
-	public function dexter_admin_settings() {
-		if ( isset( $_POST['pokemon_generation'] ) ) {
-			$pokemon_generation = $_POST['pokemon_generation'];
-			update_option( 'wp_dexter_pokemon_generation', $pokemon_generation );
-		}
-		?>
+	public function admin_form_settings() {
+	    ?>
 		<div class="postbox pokepostbox">
 			<div class="settings">
 				<h3>Settings</h3>
 				<p class="about description">Changes might take a while</p>
 			</div>
 			<form name="dexter_options" method="post" action="">
+                <?php wp_nonce_field( 'submit_pokemon_generation', 'pokemon_generation_nonce' ); ?>
 				<div class="form-field">
 					<p>Currently picking up from: <span class="pokebold"><?php echo esc_html( get_option( 'wp_dexter_pokemon_generation' ) . ' Pokemon' ); ?></span></p>
 					<label for="pokemon_generation"> Show until which generation? </label>
@@ -83,5 +80,19 @@ class Dexter_admin{
 				</div>
 			</form>
 			<?php
+		$this->process_form_settings();
 	}
+	/**
+	 * Process the form settings
+	 */
+	public function process_form_settings() {
+	    if(isset( $_POST['pokemon_generation_nonce'] ) ) {
+	        if( wp_verify_nonce( $_POST['pokemon_generation_nonce'], 'submit_pokemon_generation' ) ){
+		        if ( isset( $_POST[ 'pokemon_generation'] ) ) {
+			        $pokemon_generation = $_POST['pokemon_generation'];
+			        update_option( 'wp_dexter_pokemon_generation', $pokemon_generation );
+            }
+        }
+	}
+}
 }
