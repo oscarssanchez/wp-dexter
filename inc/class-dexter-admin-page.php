@@ -36,8 +36,8 @@ class Dexter_admin{
 	public function admin_main_page() {
 		self::admin_header();
 		//Renders the Pokemon Metabox with all display options enabled.
-		Pokemon_Metabox::display_full_metabox();
 		$this->admin_form_settings();
+		Pokemon_Metabox::display_full_metabox();
 	}
 	/**
 	 * Renders the header of the admin area
@@ -54,6 +54,7 @@ class Dexter_admin{
 	 * Renders the admin settings
 	 */
 	public function admin_form_settings() {
+
 	    ?>
 		<div class="postbox pokepostbox">
 			<div class="settings">
@@ -61,23 +62,17 @@ class Dexter_admin{
 				<p class="about description">Changes might take a while</p>
 			</div>
 			<form name="dexter_options" method="post" action="">
-                <?php wp_nonce_field( 'submit_pokemon_generation', 'pokemon_generation_nonce' ); ?>
+				<?php wp_nonce_field( 'submit_pokemon_generation', 'pokemon_generation_nonce' ); ?>
 				<div class="form-field">
-					<p>Currently picking up from: <span class="pokebold"><?php echo esc_html( get_option( 'wp_dexter_pokemon_generation' ) . ' Pokemon' ); ?></span></p>
 					<label for="pokemon_generation"> Show until which generation? </label>
 					<select name="pokemon_generation">
-						<option value="151">1st Gen</option>
-						<option value="251">2nd Gen</option>
-						<option value="386">3rd Gen</option>
-						<option value="493">4th Gen</option>
-						<option value="649">5th Gen</option>
-						<option value="721">6th Gen</option>
-						<option value="807">7th Gen</option>
+						<?php Dexter_api::pokemon_list(); ?>
 					</select>
 				</div>
 				<div class="form-field">
 					<?php submit_button(); ?>
 				</div>
+				<p>Currently picking up from: <span class="pokebold"><?php echo esc_html( get_option( 'wp_dexter_pokemon_generation' ) . ' Pokemon' ); ?></span></p>
 			</form>
 			<?php
 		$this->process_form_settings();

@@ -13,7 +13,7 @@
 defined( 'ABSPATH' ) or die( 'Access denied' );
 
 require_once( 'inc/class-dexter-api.php' );
-require_once( 'inc/class-pokemon-metabox.php' );
+require_once( 'inc/class-dextermbox.php' );
 require_once( 'inc/class-dexter.php' );
 require_once( 'inc/class-dexter-widget.php' );
 require_once( 'inc/class-dexter-admin-page.php' );
