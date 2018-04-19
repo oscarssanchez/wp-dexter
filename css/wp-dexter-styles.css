@@ -1,9 +1,40 @@
+/** POKECHART **/
+
+.pokestats text{
+    fill: black;
+    font: 10px sans-serif;
+    text-anchor: start;
+}
+
+.pokestats rect {
+    fill: yellow;
+}
+
+.pokestats_title {
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.pokestats {
+    margin-bottom: 15px;
+}
+
+/**POKEBOX**/
+
 .pokepostbox{
     padding-left: 30px;
 }
 
 .pokebold{
-    font-weight: 800;
+    font-weight: 700;
+}
+
+.pokebox_attr {
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
 .settings{

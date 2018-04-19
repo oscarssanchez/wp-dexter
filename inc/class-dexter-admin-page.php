@@ -10,6 +10,7 @@ class Dexter_admin{
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'admin_menus' ) );
 		add_action( 'admin_head', array( $this, 'add_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'add_scripts' ) );
 	}
 	/**
 	 * Creates the admin menus for the plugin
@@ -24,6 +25,14 @@ class Dexter_admin{
 			'dashicons-smartphone'
 		);
 	}
+	/**
+	 * Enqueues JavaScript files
+	 */
+	public function add_scripts() {
+		wp_enqueue_script( 'd3-scripts', 'https://d3js.org/d3.v5.min.js');
+		wp_enqueue_script( 'dexter-scripts', plugins_url( '../js/dexter-scripts.js', __FILE__ ), array( 'jquery'), '', true );
+		wp_localize_script( 'dexter-scripts', 'pokemon_stats', Dexter_api::get_pokemon_json_data() );
+    }
 	/**
 	 * Enqueues the CSS stylesheet
 	 */
@@ -54,7 +63,6 @@ class Dexter_admin{
 	 * Renders the admin settings
 	 */
 	public function admin_form_settings() {
-
 	    ?>
 		<div class="postbox pokepostbox">
 			<div class="settings">
