@@ -13,5 +13,7 @@ class Dexter_plugin{
 		$dexter_api   = new Dexter_api();
 		$dexter_admin = new Dexter_admin();
 		$dexter_widget = new Dexter_widget();
+
+		$dexter_admin->init();
 	}
 }

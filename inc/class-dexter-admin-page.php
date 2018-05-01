@@ -7,7 +7,7 @@ class Dexter_admin{
 	/**
 	 * Constructor
 	 */
-	public function __construct() {
+	public function init() {
 		add_action( 'admin_menu', array( $this, 'admin_menus' ) );
 		add_action( 'admin_head', array( $this, 'add_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'add_scripts' ) );
