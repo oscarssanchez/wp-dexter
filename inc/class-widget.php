@@ -3,8 +3,15 @@
  * The widget class
  */
 
-class Dexter_widget extends WP_Widget{
-	
+namespace WpDexter;
+
+class Widget extends \WP_Widget {
+
+    /**
+     * Widget constructor.
+     *
+     * @param $plugin
+     */
 	function __construct() {
 		parent::__construct(
 			'dexter_widget',
@@ -15,6 +22,7 @@ class Dexter_widget extends WP_Widget{
 			)
 		);
 	}
+
 	public static function register() {
 		register_widget( get_class() );
 	}
@@ -88,25 +96,23 @@ class Dexter_widget extends WP_Widget{
 		}
 		echo '</div>';
 		//Display meta_box
-		Pokemon_Metabox::display_meta_box();
+        $this->plugin->components->metabox->display_meta_box();
 		// Display something if show_number_checkbox is true
 		if ( $show_number_checkbox ) {
-			Pokemon_Metabox::show_number();
+            $this->plugin->components->metabox->show_number();
 		}
 		// Display something if show_type_checkbox is true
 		if ( $show_type_checkbox ) {
-			Pokemon_Metabox::show_type();
+            $this->plugin->components->metabox->show_type();
 		}
 		// Display something if show_weight_checkbox is true
 		if ( $show_weight_checkbox ) {
-			Pokemon_Metabox::show_weight();
+            $this->plugin->components->metabox->show_weight();
 		}
 		// Display something if show_height_checkbox is true
 		if ( $show_height_checkbox ) {
-			Pokemon_Metabox::show_height();
+            $this->plugin->components->metabox->show_height();
 		}
-		Pokemon_Metabox::metabox_footer();
-		// WordPress core after_widget hook
 		echo $after_widget;
 	}
 	

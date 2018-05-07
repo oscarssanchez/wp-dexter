@@ -5,7 +5,9 @@
  * Powered by http://pokeapi.co as the data source
  */
 
-class Dexter_api {
+namespace WpDexter;
+
+class Api {
 	
 	/**
 	 * @var string $api_url The URL where we request the pokemon data from.
@@ -17,7 +19,7 @@ class Dexter_api {
 	 *
 	 * @return array|mixed|object
 	 */
-	public static function get_pokemon_data() {
+	public function get_pokemon_data() {
 		//Fetches if there's custom settings to show from.
 		$pokemon_generation = get_option( 'wp_dexter_pokemon_generation' );
 		//Sets initial pokemon data if not.
@@ -25,22 +27,20 @@ class Dexter_api {
 			$pokemon_generation = 251;
 			update_option( 'wp_dexter_pokemon_generation', $pokemon_generation );
 		}
-		$pokemon_id = rand( 1, $pokemon_generation );
-		$json       = wp_remote_get( self::$api_url . '/' . $pokemon_id );
-		$json_feed  = json_decode( $json['body'] );
+		$json = wp_remote_get( self::$api_url . '/' . rand( 1, $pokemon_generation ) );
+		$json_feed = json_decode( $json['body'] );
 		
 		return $json_feed;
 	}
 	
-	public static function get_pokemon_json_data() {
-		$pokemon_data = json_encode( self::get_pokemon_data() );
-		return $pokemon_data;
+	public function get_pokemon_json_data() {
+		return json_encode( $this->get_pokemon_data() );
 	}
 	
 	/**
 	 * Render a list of pokemon generations and corresponding number of pokemon.
 	 */
-	public static function pokemon_list() {
+	public function pokemon_list() {
 		$generation_list = array(
 			array(
 				'gen_name'   => '1st Gen',
