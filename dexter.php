@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: wp-dexter
+ * Plugin Name: WP-Dexter
  * Description: The useful pokemon encyclopedia now on your WordPress website. Uses pokéAPI.
  * Text Domain: wp-dexter
  * Plugin URI: https://github.com/oscarssanchez/wp-dexter

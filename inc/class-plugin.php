@@ -1,6 +1,6 @@
 <?php
 /**
- * The main plugin class
+ * The main plugin class.
  *
  * @package WpDexter
  */
@@ -10,11 +10,18 @@ namespace WpDexter;
 /**
  * Class Plugin
  *
- * Initializes and instantiates de plugin.
+ * Initializes and instantiates the plugin.
  *
  * @package WpDexter
  */
 class Plugin {
+
+	/**
+	 * Plugin version.
+	 *
+	 * @var string
+	 */
+	const VERSION = '1.0';
 
 	/**
 	 * The Plugin instance.
@@ -31,6 +38,19 @@ class Plugin {
 	public $components;
 
 	/**
+	 * Instantiates the main plugin class.
+	 *
+	 * @return object|Plugin
+	 */
+	public static function get_instance() {
+		if ( ! self::$instance instanceof Plugin ) {
+			self::$instance = new Plugin();
+		}
+
+		return self::$instance;
+	}
+
+	/**
 	 * Initializes the plugin by loading files and classes.
 	 */
 	public function init() {
@@ -40,17 +60,17 @@ class Plugin {
 	}
 
 	/**
-	 * Loads all plugin files.
+	 * Loads plugin files.
 	 */
 	public function load_files() {
 		require_once( dirname( __FILE__ ) . '/class-widget.php' );
-		require_once( dirname( __FILE__ ) . '/class-admin-page.php' );
+		require_once( dirname( __FILE__ ) . '/class-admin.php');
 		require_once( dirname( __FILE__ ) . '/class-api.php');
 		require_once( dirname( __FILE__ ) . '/class-pokemon-metabox.php');
 	}
 
 	/**
-	 * Instantiates the plugin classes in $components
+	 * Instantiates the plugin classes in $components .
 	 */
 	public function load_classes() {
 		$this->components = new \stdClass();
@@ -60,20 +80,18 @@ class Plugin {
 		$this->components->metabox = new Pokemon_Metabox( $this );
 	}
 
+	/**
+	 * Adds plugin actions.
+	 */
 	public function add_actions() {
-        add_action( 'widgets_init', array( $this, 'register_widget' ) );
-    }
-
-	public static function get_instance() {
-		if ( ! self::$instance instanceof Plugin ) {
-			self::$instance = new Plugin();
-		}
-
-		return self::$instance;
+		add_action( 'widgets_init', array( $this, 'register_widget' ) );
 	}
 
-    public function register_widget() {
-        register_widget( __NAMESPACE__ . '\Widget' );
-    }
+	/**
+	 * Registers the plugin widget.
+	 */
+	public function register_widget() {
+		register_widget( __NAMESPACE__ . '\Widget' );
+	}
 
 }

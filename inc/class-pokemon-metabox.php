@@ -1,101 +1,117 @@
 <?php
 /**
- * The Metabox Class
+ * The Metabox Class.
  */
 
 namespace WpDexter;
 
+/**
+ * Class Pokemon_Metabox
+ *
+ * @package WpDexter
+ */
 class Pokemon_Metabox {
-    /**
-     * Instance of the plugin.
-     *
-     * @var object
-     */
-    public $plugin;
-
-    /**
-     * Instantiate this class.
-     *
-     * @param object $plugin Instance of the plugin.
-     */
-
-    /**
-     * Stores the pokemon data.
-     *
-     * @var object
-     */
-    public $pokemon_data;
-
-    public function __construct( $plugin ) {
-        $this->plugin = $plugin;
-        $this->pokemon_data = $this->plugin->components->api->get_pokemon_data();
-    }
 
 	/**
-	 * Displays the basic pokemon data
+	 * Instance of the plugin.
+	 *
+	 * @var object
+	 */
+	public $plugin;
+
+	/**
+	 * Stores the Pokémon data.
+	 *
+	 * @var object
+	 */
+	public $pokemon_data;
+
+	/**
+	 * Pokemon_Metabox constructor.
+	 *
+	 * Instantiates this class and loads the Pokémon data retrieved from the API.
+	 *
+	 * @param $plugin
+	 */
+	public function __construct( $plugin ) {
+		$this->plugin = $plugin;
+		$this->pokemon_data = $this->plugin->components->api->get_pokemon_data();
+	}
+
+	/**
+	 * Displays the basic Pokémon data.
 	 */
 	public function display_meta_box() {
 		?>
 		<div class="postbox pokepostbox">
-			<h3>Pokemon:</h3>
-			<img src="<?php echo $this->pokemon_data->{'sprites'}->{'back_default'}; ?>">
-			<img src="<?php echo $this->pokemon_data->{'sprites'}->{'front_default'}; ?>">
-			<p>Name: <?php echo $this->pokemon_data->{'name'}; ?></p>
+			<h3>Pokémon:</h3>
+			<img src="<?php echo esc_url( $this->pokemon_data->sprites->back_default ); ?>">
+			<img src="<?php echo esc_url( $this->pokemon_data->sprites->front_default ); ?>">
+			<p><?php echo esc_html( sprintf( __( 'Name: %s', 'wp-dexter' ), $this->pokemon_data->name ) ); ?></p>
 		<?php
 	}
+
 	/**
-	 * Displays all pokemon data
+	 * Displays all Pokémon data.
 	 */
 	public function display_full_metabox() {
 		$this->display_meta_box();
-        $this->show_number();
-        $this->show_type();
-        $this->show_height();
-        $this->show_weight();
-        $this->stats_container();
-        ?>
-        </div>
-        <?php
+		$this->show_number();
+		$this->show_type();
+		$this->show_height();
+		$this->show_weight();
+		$this->stats_container();
+		?>
+		</div>
+		<?php
 	}
-	
+
+	/**
+	 * Displays the stats chart.
+	 */
 	public function stats_container() {
 		?>
 		<div>
-			<p class="pokestats_title">Stats</p>
+			<p class="pokestats_title"><?php esc_html_e( 'Stats' ); ?></p>
 			<svg class="pokestats"></svg>
 		</div>
 		<?php
 	}
+
 	/**
-	 * Displays the pokemon number
+	 * Displays the Pokémon number.
 	 */
 	public function show_number() {
 		?>
-		<p>Number: <?php echo $this->pokemon_data->{'id'}; ?></p>
+		<p><?php echo esc_html( sprintf( __( 'Number: %s', 'wp-dexter' ), $this->pokemon_data->id )  ); ?></p>
 		<?php
 	}
+
 	/**
-	 * Displays the pokemon height
+	 * Displays the Pokémon height.
 	 */
 	public function show_height() {
 		?>
-		<p>Height: <?php echo $this->pokemon_data->{'height'}; ?></p>
+		<p><?php echo esc_html( sprintf( __( 'Height: %s', 'wp-dexter' ), $this->pokemon_data->height )  ); ?></p>
 		<?php
 	}
+
 	/**
-	 * Displays the pokemon weight
+	 * Displays the Pokémon weight.
 	 */
 	public function show_weight() {
 		?>
-		<p>Weight: <?php echo $this->pokemon_data->{'weight'}; ?></p>
+		<p><?php echo esc_html( sprintf( __( 'Weight: %s', 'wp-dexter' ), $this->pokemon_data->weight )  ); ?></p>
 		<?php
 	}
+
 	/**
-	 * Displays the pokemon type
+	 * Displays the Pokémon type.
 	 */
 	public function show_type() {
 		?>
-		<p>Type: <?php echo $this->pokemon_data->{'types'}[0]->{'type'}->{'name'}; ?></p>
+		<p><?php echo esc_html( sprintf( __( 'Type: %s', 'wp-dexter' ), $this->pokemon_data->types[0]->type->name )  ); ?></p>
 		<?php
 	}
+
 }

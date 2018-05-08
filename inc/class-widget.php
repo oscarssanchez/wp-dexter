@@ -5,13 +5,18 @@
 
 namespace WpDexter;
 
+/**
+ * Class Widget
+ *
+ * @package WpDexter
+ */
 class Widget extends \WP_Widget {
 
-    /**
-     * Widget constructor.
-     *
-     * @param $plugin
-     */
+	/**
+	 * Widget constructor.
+	 *
+	 * @param $plugin
+	 */
 	function __construct() {
 		parent::__construct(
 			'dexter_widget',
