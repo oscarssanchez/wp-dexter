@@ -21,7 +21,6 @@ class Widget extends \WP_Widget {
 
 	/**
 	 * Widget constructor. Instantiates the class.
-	 *
 	 */
 	function __construct() {
 		parent::__construct(
