@@ -20,7 +20,7 @@ class Widget extends \WP_Widget {
 	const ID_BASE = 'dexter_widget';
 
 	/**
-	 * Widget constructor. Instantiates the class
+	 * Widget constructor. Instantiates the class.
 	 *
 	 */
 	function __construct() {
