@@ -63,10 +63,10 @@ class Plugin {
 	 * Loads plugin files.
 	 */
 	public function load_files() {
-		require_once( dirname( __FILE__ ) . '/class-widget.php' );
 		require_once( dirname( __FILE__ ) . '/class-admin.php');
 		require_once( dirname( __FILE__ ) . '/class-api.php');
 		require_once( dirname( __FILE__ ) . '/class-pokemon-metabox.php');
+		require_once( dirname( __FILE__ ) . '/class-widget.php' );
 	}
 
 	/**

@@ -13,27 +13,34 @@ namespace WpDexter;
 class Widget extends \WP_Widget {
 
 	/**
-	 * Widget constructor.
+	 * WP-Dexter ID Base.
 	 *
-	 * @param $plugin
+	 * @var string
+	 */
+	const ID_BASE = 'dexter_widget';
+
+	/**
+	 * Widget constructor. Instantiates the class
+	 *
 	 */
 	function __construct() {
 		parent::__construct(
-			'dexter_widget',
-			esc_html( 'Dexter' ),
+			self::ID_BASE,
+			__( 'Dexter', 'wp-dexter' ),
 			array(
-				'description'                 => 'Display Pokemon data on your site! ',
+				'description'                 => __( 'Display Pokemon data on your site!', 'wp-dexter' ),
 				'customize_selective_refresh' => true,
 			)
 		);
 	}
 
-	public static function register() {
-		register_widget( get_class() );
-	}
-	
+	/**
+	 * Output Widget Form.
+	 *
+	 * @param array $instance
+	 * @return void
+	 */
 	public function form( $instance ) {
-
 		// Set widget defaults
 		$defaults = array(
 			'title'                => '',
@@ -71,7 +78,15 @@ class Widget extends \WP_Widget {
 	</p>
 	<?php
 	}
-	
+
+	/**
+	 * Updates the widget instance.
+	 *
+	 * @param array $new_instance
+	 * @param array $old_instance
+	 *
+	 * @return array
+	 */
 	public function update( $new_instance, $old_instance ) {
 		$instance                         = $old_instance;
 		$instance['title']                = isset( $new_instance['title'] ) ? wp_strip_all_tags( $new_instance['title'] ) : '';
@@ -81,8 +96,15 @@ class Widget extends \WP_Widget {
 		$instance['show_height_checkbox'] = isset( $new_instance['show_height_checkbox'] ) ? 1 : false;
 		return $instance;
 	}
-	// Display the widget
+
+	/**
+	 * Displays the widget.
+	 *
+	 * @param array $args
+	 * @param array $instance
+	 */
 	public function widget( $args, $instance ) {
+	    $plugin = Plugin::get_instance();
 		extract( $args );
 		// Check the widget options
 		$title                = isset( $instance['title'] ) ? apply_filters( 'widget_title', $instance['title'] ) : '';
@@ -100,25 +122,26 @@ class Widget extends \WP_Widget {
 			echo $before_title . $title . $after_title;
 		}
 		echo '</div>';
+
 		//Display meta_box
-        $this->plugin->components->metabox->display_meta_box();
-		// Display something if show_number_checkbox is true
+		$plugin->components->metabox->display_meta_box();
+
 		if ( $show_number_checkbox ) {
-            $this->plugin->components->metabox->show_number();
+		    $plugin->components->metabox->show_number();
 		}
-		// Display something if show_type_checkbox is true
+
 		if ( $show_type_checkbox ) {
-            $this->plugin->components->metabox->show_type();
+			$plugin->components->metabox->show_type();
 		}
-		// Display something if show_weight_checkbox is true
+
 		if ( $show_weight_checkbox ) {
-            $this->plugin->components->metabox->show_weight();
+			$plugin->components->metabox->show_weight();
 		}
-		// Display something if show_height_checkbox is true
+
 		if ( $show_height_checkbox ) {
-            $this->plugin->components->metabox->show_height();
+			$plugin->components->metabox->show_height();
 		}
 		echo $after_widget;
 	}
-	
+
 }
