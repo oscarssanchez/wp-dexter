@@ -25,7 +25,8 @@
 /**POKEBOX**/
 
 .pokepostbox {
-    padding-left: 30px;
+    padding: 0 1.5em;
+    margin-top: 1em;
 }
 
 .pokebold {

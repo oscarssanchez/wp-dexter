@@ -60,16 +60,15 @@ class Admin {
 	}
 
 	/**
-	 * Creates the admin menus for the plugin.
+	 * Creates the plugin's settings page in the settings menu.
 	 */
 	public function admin_menus() {
-		add_menu_page(
-			__( 'Dexter Admin page', 'wp-dexter' ),
-			__( 'Dexter', 'wp-dexter' ),
+		add_options_page(
+			__( 'WP-Dexter', 'wp-dexter' ),
+			__( 'WP-Dexter', 'wp-dexter' ),
 			'manage_options',
 			'wp-dexter',
-			array( $this, 'admin_main_page' ),
-			'dashicons-smartphone'
+			array( $this, 'render_options_page' )
 		);
 	}
 
@@ -91,51 +90,15 @@ class Admin {
 	/**
 	 * Renders the main page.
 	 */
-	public function admin_main_page() {
-		$this->admin_header();
-		//Renders the Pokemon Metabox with all display options enabled.
+	public function render_options_page() {
 		$this->admin_form_settings();
-		$this->plugin->components->metabox->display_full_metabox();
-	}
-
-	/**
-	 * Renders the header of the admin area.
-	 */
-	public function admin_header() {
-	?>
-		<div class="wrapper">
-			<h1><?php esc_html_e( 'Dexter', 'wp-dexter' ); ?></h1>
-			<p class="about description"><?php echo esc_html_e( 'Welcome PokeUser, you shall change Dexter settings in this page', 'wp-dexter' ); ?></p>
-		</div>
-	<?php
 	}
 
 	/**
 	 * Renders the admin settings.
 	 */
 	public function admin_form_settings() {
-		$wp_dexter_pokemon_generation = get_option( 'wp_dexter_pokemon_generation' );
-		?>
-		<div class="postbox pokepostbox">
-			<div class="settings">
-				<h3><?php echo esc_html_e( 'Settings', 'wp-dexter' ); ?></h3>
-				<p class="about description"><?php echo esc_html_e( 'Changes might take a while', 'wp-dexter' ); ?></p>
-			</div>
-			<form name="dexter_options" method="post" action="">
-				<?php wp_nonce_field( self::FORM_ACTION, 'pokemon_generation_nonce' ); ?>
-				<div class="form-field">
-					<label for="pokemon_generation"><?php echo esc_html_e (' Show until which generation?', 'wp-dexter' ); ?> </label>
-					<select name="pokemon_generation">
-						<?php $this->plugin->components->api->pokemon_list(); ?>
-					</select>
-				</div>
-				<div class="form-field">
-					<?php submit_button( esc_html( 'Save changes', 'wp-dexter' ) ); ?>
-				</div>
-				<p><?php echo esc_html_e( 'Currently picking up from:', 'wp-dexter' ); ?> <span class="pokebold"><?php echo esc_html( sprintf( __( '%s Pokemon', 'wp-dexter' ), $wp_dexter_pokemon_generation ) ); ?></span></p>
-			</form>
-			<?php
-		$this->process_form_settings();
+		include( dirname( __FILE__ ) . '/../templates/settings-page.php' );
 	}
 
 	/**

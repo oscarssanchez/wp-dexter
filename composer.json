@@ -1,0 +1,17 @@
+{
+    "name": "oscar/wp-dexter",
+    "authors": [
+        {
+            "name": "Oscar Sanchez",
+            "email": "osanpk@comunidad.unam.mx"
+        }
+    ],
+    "require": {
+        "php": ">=5.2"
+    },
+    "require-dev": {
+        "wp-coding-standards/wpcs": "*",
+        "wimg/php-compatibility": "*",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.4.4"
+    }
+}
