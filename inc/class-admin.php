@@ -48,7 +48,6 @@ class Admin {
 	public function init() {
 		add_action( 'admin_menu', array( $this, 'admin_menus' ) );
 		add_action( 'admin_head', array( $this, 'add_styles' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'add_scripts' ) );
 		add_action( 'init', array( $this, 'textdomain' ) );
 	}
 
@@ -73,32 +72,30 @@ class Admin {
 	}
 
 	/**
-	 * Enqueues JavaScript files.
-	 */
-	public function add_scripts() {
-		wp_enqueue_script( 'd3-scripts', plugins_url( '../vendor/d3/d3.min.js', __FILE__ ) );
-		wp_enqueue_script( 'dexter-scripts', plugins_url( '../js/dexter-scripts.js', __FILE__ ), array( 'jquery'), Plugin::VERSION, true );
-		wp_localize_script( 'dexter-scripts', 'pokemon_stats', $this->plugin->components->api->get_pokemon_json_data() );
-	}
-	/**
 	 * Enqueues the CSS stylesheet.
 	 */
 	public function add_styles() {
-		wp_enqueue_style( 'dexter_backend_css', plugins_url( '../css/wp-dexter-styles.css', __FILE__ ), array(), Plugin::VERSION );
+		if ( $this->is_dexter_settings_page() ) {
+			wp_enqueue_style( 'dexter_backend_css', plugins_url( '../css/wp-dexter-styles.css', __FILE__ ), array(), Plugin::VERSION );
+		}
 	}
 
 	/**
 	 * Renders the main page.
 	 */
 	public function render_options_page() {
-		$this->admin_form_settings();
+		include( dirname( __FILE__ ) . '/../templates/settings-page.php' );
 	}
 
 	/**
-	 * Renders the admin settings.
+	 * Checks if this is Dexter settings page.
+	 *
+	 * @return bool
 	 */
-	public function admin_form_settings() {
-		include( dirname( __FILE__ ) . '/../templates/settings-page.php' );
+	public function is_dexter_settings_page() {
+		if ( get_current_screen()->id === 'settings_page_wp-dexter' ) {
+			return true;
+		}
 	}
 
 	/**
