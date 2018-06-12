@@ -25,14 +25,14 @@ class Admin {
 	 * @var string
 	 */
 	const SLUG = 'wp-dexter';
-	
+
 	/**
 	 * The nonce name.
 	 *
 	 * @var string
 	 */
 	const NONCE_NAME = 'pokemon_generation_nonce';
-	
+
 	/**
 	 * The nonce action
 	 *
@@ -108,7 +108,7 @@ class Admin {
 	}
 
 	/**
-	 * Process the form settings.
+	 * Process and saves the form settings.
 	 */
 	public function save() {
 		$verify = (
@@ -123,7 +123,7 @@ class Admin {
 			exit;
 		}
 	}
-	
+
 	/**
 	 * Returns the admin url of Dexter settings page.
 	 *
