@@ -25,13 +25,20 @@ class Admin {
 	 * @var string
 	 */
 	const SLUG = 'wp-dexter';
-
+	
 	/**
-	 * Action to submit a Pokémon generation.
+	 * The nonce name.
 	 *
 	 * @var string
 	 */
-	const FORM_ACTION = 'submit_pokemon_generation';
+	const NONCE_NAME = 'pokemon_generation_nonce';
+	
+	/**
+	 * The nonce action
+	 *
+	 * @var string
+	 */
+	const NONCE_ACTION = 'pokemon_generation_update';
 
 	/**
 	 * Instantiate this class.
@@ -47,6 +54,7 @@ class Admin {
 	 */
 	public function init() {
 		add_action( 'admin_menu', array( $this, 'admin_menus' ) );
+		add_action( 'admin_post_wp-dexter-save', array( $this, 'save' ) );
 		add_action( 'admin_head', array( $this, 'add_styles' ) );
 		add_action( 'init', array( $this, 'textdomain' ) );
 	}
@@ -96,15 +104,32 @@ class Admin {
 		if ( get_current_screen()->id === 'settings_page_wp-dexter' ) {
 			return true;
 		}
+		return false;
 	}
 
 	/**
 	 * Process the form settings.
 	 */
-	public function process_form_settings() {
-		if ( isset( $_POST['pokemon_generation_nonce'] ) && wp_verify_nonce( $_POST['pokemon_generation_nonce'], self::FORM_ACTION ) && isset( $_POST['pokemon_generation'] ) ) {
+	public function save() {
+		$verify = (
+			isset( $_POST['pokemon_generation'], $_POST[ self::NONCE_NAME ] )
+			&&
+			wp_verify_nonce( sanitize_key( wp_unslash( $_POST[ self::NONCE_NAME ] ) ), self::NONCE_ACTION )
+		);
+
+		if ( true === $verify ) {
 			update_option( 'wp_dexter_pokemon_generation', sanitize_text_field( wp_unslash( $_POST['pokemon_generation'] ) ) );
+			wp_redirect( $this->admin_url() . '&updated=true' );
+			exit;
 		}
 	}
-
+	
+	/**
+	 * Returns the admin url of Dexter settings page.
+	 *
+	 * @return string
+	 */
+	public function admin_url() {
+		return admin_url( 'options-general.php?page=wp-dexter' );
+	}
 }
