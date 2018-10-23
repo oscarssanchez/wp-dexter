@@ -43,10 +43,15 @@ class Api {
 			$pokemon_generation = self::DEFAULT_GEN;
 			update_option( 'wp_dexter_pokemon_generation', $pokemon_generation );
 		}
-		$json = wp_remote_get( self::API_URL . '/' . rand( 1, $pokemon_generation ) );
-		$json_feed = json_decode( $json['body'] );
-		
-		return $json_feed;
+
+		//let's cache so we don't make a ton of requests
+		$pokemon_data = wp_cache_get( 'pokemon-feed-', 'wp-dexter' );
+		if ( ! $pokemon_data ) {
+			$pokemon_data = $json = wp_remote_get( self::API_URL . '/' . rand( 1, $pokemon_generation ) );
+			wp_cache_set( 'pokemon-feed-', $pokemon_data, 'wp-dexter', 5 * MINUTE_IN_SECONDS );
+		}
+
+		return json_decode( $pokemon_data['body'] );
 	}
 
 	/**
@@ -57,7 +62,7 @@ class Api {
 	public function get_pokemon_json_data() {
 		return json_encode( $this->get_pokemon_data() );
 	}
-	
+
 	/**
 	 * Render a list of Pokémon generations and corresponding number of Pokémon.
 	 */
