@@ -101,7 +101,7 @@ class Admin {
 	 * @return bool
 	 */
 	public function is_dexter_settings_page() {
-		if ( get_current_screen()->id === 'settings_page_wp-dexter' ) {
+		if ( 'settings_page_wp-dexter' === get_current_screen()->id ) {
 			return true;
 		}
 		return false;

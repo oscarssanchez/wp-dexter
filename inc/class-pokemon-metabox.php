@@ -24,7 +24,7 @@ class Pokemon_Metabox {
 	 *
 	 * @var object
 	 */
-	public $pokemon_data;
+	 protected $pokemon_data;
 
 	/**
 	 * Pokemon_Metabox constructor.
@@ -34,7 +34,7 @@ class Pokemon_Metabox {
 	 * @param $plugin
 	 */
 	public function __construct( $plugin ) {
-		$this->plugin = $plugin;
+		$this->plugin       = $plugin;
 		$this->pokemon_data = $this->plugin->components->api->get_pokemon_data();
 	}
 
@@ -44,25 +44,9 @@ class Pokemon_Metabox {
 	public function display_meta_box() {
 		?>
 		<div class="postbox pokepostbox">
-			<h3>Pokémon:</h3>
 			<img src="<?php echo esc_url( $this->pokemon_data->sprites->back_default ); ?>">
 			<img src="<?php echo esc_url( $this->pokemon_data->sprites->front_default ); ?>">
 			<p><?php echo esc_html( sprintf( __( 'Name: %s', 'wp-dexter' ), $this->pokemon_data->name ) ); ?></p>
-		<?php
-	}
-
-	/**
-	 * Displays all Pokémon data.
-	 */
-	public function display_full_metabox() {
-		$this->display_meta_box();
-		$this->show_number();
-		$this->show_type();
-		$this->show_height();
-		$this->show_weight();
-		$this->stats_container();
-		?>
-		</div>
 		<?php
 	}
 
