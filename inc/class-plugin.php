@@ -73,8 +73,8 @@ class Plugin {
 	 * Instantiates the plugin classes in $components .
 	 */
 	public function load_classes() {
-		$this->components = new \stdClass();
-		$this->components->api = new Api();
+		$this->components             = new \stdClass();
+		$this->components->api        = new Api();
 		$this->components->admin_page = new Admin( $this );
 		$this->components->admin_page->init();
 		$this->components->metabox = new Pokemon_Metabox( $this );

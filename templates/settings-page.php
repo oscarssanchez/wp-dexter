@@ -7,12 +7,11 @@
 
 namespace WpDexter;
 
-// Check referrer.
 if ( ! ( $this instanceof Admin ) ) {
 	return;
 }
 
-$wp_dexter_pokemon_generation = get_option( 'wp_dexter_pokemon_generation' );
+$wp_dexter_pokemon_generation = get_option( 'wp_dexter_pokemon_generation', 251 );
 ?>
 <div class="wrap">
 	<h2><?php echo esc_html( $GLOBALS['title'] ); ?></h2>

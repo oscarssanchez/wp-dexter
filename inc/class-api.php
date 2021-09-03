@@ -24,43 +24,22 @@ class Api {
 	const API_URL = 'http://pokeapi.co/api/v2/pokemon';
 
 	/**
-	 * Default pokemon generation when installing the plugin.
-	 *
-	 * @var string
-	 */
-	const DEFAULT_GEN = 251;
-
-	/**
 	 * Retrieves all the Pokémon data.
 	 *
 	 * @return array|mixed|object
 	 */
 	public function get_pokemon_data() {
-		//Fetches if there's custom settings to show from.
-		$pokemon_generation = get_option( 'wp_dexter_pokemon_generation' );
-		//Sets initial pokemon data if not.
-		if ( ! $pokemon_generation ) {
-			$pokemon_generation = self::DEFAULT_GEN;
-			update_option( 'wp_dexter_pokemon_generation', $pokemon_generation );
-		}
+		// Default gen is 251 because it is the best!
+		$pokemon_generation = get_option( 'wp_dexter_pokemon_generation', 251 );
 
 		//let's cache so we don't make a ton of requests
-		$pokemon_data = wp_cache_get( 'pokemon-feed-', 'wp-dexter' );
+		$pokemon_data = wp_cache_get( 'pokemon-data', 'wp-dexter' );
 		if ( ! $pokemon_data ) {
-			$pokemon_data = $json = wp_remote_get( self::API_URL . '/' . rand( 1, $pokemon_generation ) );
-			wp_cache_set( 'pokemon-feed-', $pokemon_data, 'wp-dexter', 5 * MINUTE_IN_SECONDS );
+			$pokemon_data = wp_remote_get( self::API_URL . '/' . rand( 1, $pokemon_generation ) );
+			wp_cache_set( 'pokemon-data', $pokemon_data, 'wp-dexter', 5 * MINUTE_IN_SECONDS );
 		}
 
 		return json_decode( $pokemon_data['body'] );
-	}
-
-	/**
-	 * Encodes the Pokémon data into JSON.
-	 *
-	 * @return mixed|object
-	 */
-	public function get_pokemon_json_data() {
-		return json_encode( $this->get_pokemon_data() );
 	}
 
 	/**

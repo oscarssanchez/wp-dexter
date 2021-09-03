@@ -101,7 +101,7 @@ class Admin {
 	 * @return bool
 	 */
 	public function is_dexter_settings_page() {
-		if ( get_current_screen()->id === 'settings_page_wp-dexter' ) {
+		if ( 'settings_page_wp-dexter' === get_current_screen()->id ) {
 			return true;
 		}
 		return false;
@@ -119,17 +119,8 @@ class Admin {
 
 		if ( true === $verify ) {
 			update_option( 'wp_dexter_pokemon_generation', sanitize_text_field( wp_unslash( $_POST['pokemon_generation'] ) ) );
-			wp_redirect( $this->admin_url() . '&updated=true' );
+			wp_redirect( admin_url( 'options-general.php?page=wp-dexter' ) . '&updated=true' );
 			exit;
 		}
-	}
-
-	/**
-	 * Returns the admin url of Dexter settings page.
-	 *
-	 * @return string
-	 */
-	public function admin_url() {
-		return admin_url( 'options-general.php?page=wp-dexter' );
 	}
 }
