@@ -40,47 +40,43 @@ class Api {
 			wp_cache_set( 'pokemon-data', $pokemon_data, 'wp-dexter', 5 * MINUTE_IN_SECONDS );
 		}
 
-		return json_decode( $pokemon_data['body'] );
+		return json_decode(  wp_remote_retrieve_body( $pokemon_data ) );
 	}
 
 	/**
-	 * Render a list of Pokémon generations and corresponding number of Pokémon.
+	 * Return formatted generations.
+     * These don't need to be retrieved often, so cache is set for a month.
+	 *
+	 * @return array|false|mixed The pokemon generations formatted or false if pokeAPI is down.
 	 */
-	public function pokemon_list() {
-		$generation_list = array(
-			array(
-				'gen_name'   => __( '1st Gen', 'wp-dexter' ),
-				'gen_number' => 151,
-			),
-			array(
-				'gen_name'   => __( '2nd Gen', 'wp-dexter' ),
-				'gen_number' => 251,
-			),
-			array(
-				'gen_name'   => __( '3rd Gen', 'wp-dexter' ),
-				'gen_number' => 386,
-			),
-			array(
-				'gen_name'   => __( '4th Gen', 'wp-dexter' ),
-				'gen_number' => 493,
-			),
-			array(
-				'gen_name'   => __( '5th Gen', 'wp-dexter' ),
-				'gen_number' => 649,
-			),
-			array(
-				'gen_name'   => __( '6th Gen', 'wp-dexter' ),
-				'gen_number' => 721,
-			),
-			array(
-				'gen_name'   => __( '7th Gen', 'wp-dexter' ),
-				'gen_number' => 807,
-			),
-		);
-
-		foreach( $generation_list as $pokemon_generation ) {
-			echo '<option value="' . esc_attr( $pokemon_generation['gen_number'] ) . '">' . esc_html( $pokemon_generation['gen_name'] ). '</option>';
+	public function get_generations() {
+		$generations = wp_cache_get( 'pokemon-generations', 'wp-dexter' );
+		if ( ! $generations ) {
+			$generations_data = wp_remote_get( self::API_URL . '/generation/' );
+			if ( 200 === wp_remote_retrieve_response_code( $generations_data ) ) {
+				$generations_data = json_decode( wp_remote_retrieve_body( $generations_data ) );
+				$generations      = [];
+				$pokemon_counter  = 0;
+				foreach ( $generations_data->results as $generation ) {
+					$generation = wp_remote_get( $generation->url );
+					if ( 200 === wp_remote_retrieve_response_code( $generation ) ) {
+						$generation       = json_decode( wp_remote_retrieve_body( $generation ) );
+						$pokemon_counter += count( $generation->pokemon_species );
+						$generations[]    = [
+							'gen_name'   => ucfirst( $generation->name ),
+							'gen_number' => $pokemon_counter
+						];
+					} else {
+						return false;
+					}
+				}
+				wp_cache_set( 'pokemon-generations', $generations, 'wp-dexter', MONTH_IN_SECONDS );
+			} else {
+				return false;
+			}
 		}
+
+		return $generations;
 	}
 
 	/**
