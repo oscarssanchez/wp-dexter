@@ -36,6 +36,9 @@ class Api {
 		$pokemon_data = wp_cache_get( 'pokemon-data', 'wp-dexter' );
 		if ( ! $pokemon_data ) {
 			$pokemon_data = wp_remote_get( self::API_URL . '/' . rand( 1, $pokemon_generation ) );
+			if ( 200 !== wp_remote_retrieve_response_code( $pokemon_data ) ) {
+			    $pokemon_data = false;);
+			}
 			wp_cache_set( 'pokemon-data', $pokemon_data, 'wp-dexter', 5 * MINUTE_IN_SECONDS );
 		}
 
@@ -81,5 +84,15 @@ class Api {
 			echo '<option value="' . esc_attr( $pokemon_generation['gen_number'] ) . '">' . esc_html( $pokemon_generation['gen_name'] ). '</option>';
 		}
 	}
-	
+
+	/**
+	 * Display a message if pokeAPI is down.
+	 */
+	public function api_failed_message() {
+		?>
+		<div class="postbox pokepostbox">
+			<p><?php esc_html_e( 'PokeAPI service is down. Sorry for the inconvenience!', 'wp-dexter' ); ?></p>
+		</div>
+		<?php
+	}
 }

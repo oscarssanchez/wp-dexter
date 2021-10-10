@@ -24,7 +24,7 @@ class Pokemon_Metabox {
 	 *
 	 * @var object
 	 */
-	 protected $pokemon_data;
+	 public $pokemon_data;
 
 	/**
 	 * Pokemon_Metabox constructor.

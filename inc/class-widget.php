@@ -123,23 +123,28 @@ class Widget extends \WP_Widget {
 		echo '</div>';
 
 		//Display meta_box
-		$plugin->components->metabox->display_meta_box();
+		if ( ! $plugin->components->metabox->pokemon_data ) {
+		    $plugin->components->metabox->api_failed_message();
+		} else {
+			$plugin->components->metabox->display_meta_box();
 
-		if ( $show_number_checkbox ) {
-		    $plugin->components->metabox->show_number();
+			if ( $show_number_checkbox ) {
+				$plugin->components->metabox->show_number();
+			}
+
+			if ( $show_type_checkbox ) {
+				$plugin->components->metabox->show_type();
+			}
+
+			if ( $show_weight_checkbox ) {
+				$plugin->components->metabox->show_weight();
+			}
+
+			if ( $show_height_checkbox ) {
+				$plugin->components->metabox->show_height();
+			}
 		}
 
-		if ( $show_type_checkbox ) {
-			$plugin->components->metabox->show_type();
-		}
-
-		if ( $show_weight_checkbox ) {
-			$plugin->components->metabox->show_weight();
-		}
-
-		if ( $show_height_checkbox ) {
-			$plugin->components->metabox->show_height();
-		}
 		echo $after_widget;
 	}
 
