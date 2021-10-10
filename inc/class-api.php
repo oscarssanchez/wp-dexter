@@ -37,7 +37,7 @@ class Api {
 		if ( ! $pokemon_data ) {
 			$pokemon_data = wp_remote_get( self::API_URL . '/' . rand( 1, $pokemon_generation ) );
 			if ( 200 !== wp_remote_retrieve_response_code( $pokemon_data ) ) {
-				wp_cache_set( 'pokemon-data', $pokemon_data, 'wp-dexter', WEEK_IN_SECONDS );
+			    $pokemon_data = false;);
 			}
 			wp_cache_set( 'pokemon-data', $pokemon_data, 'wp-dexter', 5 * MINUTE_IN_SECONDS );
 		}
