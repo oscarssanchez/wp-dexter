@@ -31,7 +31,6 @@ class Api {
 		// Default gen is 251 because it is the best!
 		$pokemon_generation = get_option( 'wp_dexter_pokemon_generation', 251 );
 
-		//let's cache so we don't make a ton of requests
 		$pokemon_data = wp_cache_get( 'pokemon-data', 'wp-dexter' );
 		if ( ! $pokemon_data ) {
 			$pokemon_data = wp_remote_get( self::API_URL . '/pokemon/' . rand( 1, $pokemon_generation ) );
