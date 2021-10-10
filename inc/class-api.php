@@ -15,13 +15,12 @@ namespace WpDexter;
  * @package WpDexter
  */
 class Api {
-	
 	/**
 	 * The URL where we request the Pokémon data from.
 	 *
 	 * @var string API_URL
 	 */
-	const API_URL = 'http://pokeapi.co/api/v2/pokemon';
+	const API_URL = 'http://pokeapi.co/api/v2';
 
 	/**
 	 * Retrieves all the Pokémon data.
@@ -32,12 +31,11 @@ class Api {
 		// Default gen is 251 because it is the best!
 		$pokemon_generation = get_option( 'wp_dexter_pokemon_generation', 251 );
 
-		//let's cache so we don't make a ton of requests
 		$pokemon_data = wp_cache_get( 'pokemon-data', 'wp-dexter' );
 		if ( ! $pokemon_data ) {
-			$pokemon_data = wp_remote_get( self::API_URL . '/' . rand( 1, $pokemon_generation ) );
+			$pokemon_data = wp_remote_get( self::API_URL . '/pokemon/' . rand( 1, $pokemon_generation ) );
 			if ( 200 !== wp_remote_retrieve_response_code( $pokemon_data ) ) {
-			    $pokemon_data = false;);
+			    $pokemon_data = false;
 			}
 			wp_cache_set( 'pokemon-data', $pokemon_data, 'wp-dexter', 5 * MINUTE_IN_SECONDS );
 		}
