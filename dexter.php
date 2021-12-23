@@ -6,7 +6,7 @@
  * Plugin URI: https://github.com/oscarssanchez/wp-dexter
  * Author: Oscar Sánchez
  * Author URI: https://oscarssanchez.com
- * Version: 1.1
+ * Version: 1.1.1
  * License: GPLv2 or later
  */
 
