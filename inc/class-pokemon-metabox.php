@@ -38,6 +38,59 @@ class Pokemon_Metabox {
 		$this->pokemon_data = $this->plugin->components->api->get_pokemon_data();
 	}
 
+	public function init() {
+		add_action( 'init', [ $this, 'register_block'] );
+	}
+
+	/**
+	* Registers out Pokémon block
+	*/
+	public function register_block() {
+		register_block_type(
+			WP_DEXTER_PATH . '/js/blocks',
+			[
+				'render_callback' => [ $this, 'render_block_callback' ],
+			]
+
+		);
+	}
+
+	/**
+	 * Render callback method for the block
+	 *
+	 * @param array  $attributes The blocks attributes
+	 *
+	 * @return string The rendered block markup.
+	 */
+	public function render_block_callback( $attributes ) {
+		$html = '';
+		if ( ! empty ( $attributes['pokemonNumber'] ) && is_numeric( $attributes['pokemonNumber'] ) ) :
+			ob_start(); ?>
+			<div class="postbox pokepostbox">
+				<img src="<?php echo esc_url( $attributes['frontImage'] ); ?>">
+				<img src="<?php echo esc_url( $attributes['backImage'] ); ?>">
+				<?php if ( $attributes['showName'] && ! empty( $attributes['pokemonName'] ) ) : ?>
+					<p><?php printf( __( 'Name: %s', 'wp_dexter' ), esc_html( $attributes['pokemonName'] ) ); ?></p>
+				<?php endif; ?>
+				<?php if ( $attributes['showNumber'] ) : ?>
+					<p><?php printf( __( 'Number: %s', 'wp_dexter' ), esc_html( $attributes['pokemonNumber'] ) ); ?></p>
+				<?php endif; ?>
+				<?php if ( $attributes['showType'] && ! empty( $attributes['pokemonType'] ) ) : ?>
+					<p><?php printf( __( 'Type: %s', 'wp_dexter' ), esc_html( $attributes['pokemonType'] ) ); ?></p>
+				<?php endif; ?>
+				<?php if ( $attributes['showWeight'] && ! empty( $attributes['pokemonWeight'] ) ) : ?>
+					<p><?php printf( __( 'Weight: %s', 'wp_dexter' ), esc_html( $attributes['pokemonWeight'] ) ); ?></p>
+				<?php endif; ?>
+				<?php if ( $attributes['showHeight'] && ! empty( $attributes['pokemonHeight'] ) ) : ?>
+					<p><?php printf( __( 'Height: %s', 'wp_dexter' ), esc_html( $attributes['pokemonHeight'] ) ); ?></p>
+				<?php endif; ?>
+			</div>
+			<?php
+			$html = ob_get_clean();
+		endif;
+		return $html;
+	}
+
 	/**
 	 * Displays the basic Pokémon data.
 	 */
