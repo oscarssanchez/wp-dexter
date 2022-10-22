@@ -84,7 +84,7 @@ class Admin {
 	 */
 	public function add_styles() {
 		if ( $this->is_dexter_settings_page() ) {
-			wp_enqueue_style( 'dexter_backend_css', plugins_url( '../css/wp-dexter-styles.css', __FILE__ ), array(), Plugin::VERSION );
+			wp_enqueue_style( 'dexter_backend_css', plugins_url( '../dist/css/frontend.css', __FILE__ ), array(), Plugin::VERSION );
 		}
 	}
 

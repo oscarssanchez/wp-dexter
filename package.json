@@ -3,7 +3,13 @@
   "version": "1.1.0",
   "description": "The handy encyclopedia in your WordPress site",
   "scripts": {
-    "build": "wp-scripts build"
+    "build": "10up-toolkit build"
+  },
+  "10up-toolkit": {
+    "entry": {
+      "block": "./js/blocks/index.js",
+      "frontend": "./css/wp-dexter-styles.css"
+    }
   },
   "repository": {
     "type": "git",
@@ -19,11 +25,11 @@
   },
   "homepage": "https://github.com/oscarssanchez/wp-dexter#readme",
   "devDependencies": {
-    "@wordpress/blocks": "^11.1.5",
     "@wordpress/block-editor": "8.3.1",
-    "@wordpress/element": "4.2.1",
+    "@wordpress/blocks": "^11.1.5",
     "@wordpress/components": "^19.1.6",
+    "@wordpress/element": "4.2.1",
     "@wordpress/i18n": "^4.19.0",
-    "@wordpress/scripts": "^19.2.2"
+    "10up-toolkit": "^4.3.0"
   }
 }
