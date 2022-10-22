@@ -1,0 +1,67 @@
+{
+  "title": "WP Dexter",
+  "description": "The handy encyclopedia in your posts!",
+  "name": "wpdexter/dexter",
+  "icon": "feedback",
+  "category": "wp-dexter",
+  "attributes":{
+    "pokemonNumber": {
+      "type": "string"
+    },
+    "frontImage": {
+      "type": "string"
+    },
+    "backImage": {
+      "type": "string"
+    },
+    "pokemonName": {
+      "type": "string"
+    },
+    "pokemonHeight": {
+      "type": "integer"
+    },
+    "pokemonWeight": {
+      "type": "integer"
+    },
+    "pokemonType": {
+      "type": "string"
+    },
+    "showName": {
+      "type": "boolean"
+    },
+    "showNumber": {
+      "type": "boolean"
+    },
+    "showHeight": {
+      "type": "boolean"
+    },
+    "showWeight": {
+      "type": "boolean"
+    },
+    "showType": {
+      "type": "boolean"
+    }
+  },
+  "supports": {
+    "align": false,
+    "alignWide": false,
+    "anchor": false,
+    "color":{
+      "gradients": false,
+      "background": false,
+      "text": false
+    },
+    "customClassName": false,
+    "defaultStylePicker": false,
+    "fontSize": false,
+    "html": false,
+    "inserter": true,
+    "lineHeight": true,
+    "multiple": true,
+    "reusable": false,
+    "spacing": {
+      "padding": false
+    }
+  },
+  "editorScript": "file:../dist/index.js"
+}

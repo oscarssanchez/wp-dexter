@@ -78,6 +78,7 @@ class Plugin {
 		$this->components->admin_page = new Admin( $this );
 		$this->components->admin_page->init();
 		$this->components->metabox = new Pokemon_Metabox( $this );
+        $this->components->metabox->init();
 	}
 
 	/**

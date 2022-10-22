@@ -15,7 +15,9 @@ namespace WpDexter;
 /** Prevent direct access to the file **/
 defined( 'ABSPATH' ) or die( 'Access denied' );
 
-require_once( dirname( __FILE__ ) . '/inc/class-plugin.php' );
+define( 'WP_DEXTER_PATH', plugin_dir_path( __FILE__ ) );
+
+require_once( WP_DEXTER_PATH . '/inc/class-plugin.php' );
 
 $plugin = Plugin::get_instance();
 $plugin->init();

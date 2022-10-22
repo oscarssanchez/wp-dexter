@@ -1,0 +1,29 @@
+{
+  "name": "wp-dexter",
+  "version": "1.1.0",
+  "description": "The handy encyclopedia in your WordPress site",
+  "scripts": {
+    "build": "wp-scripts build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oscarssanchez/wp-dexter.git"
+  },
+  "keywords": [
+    "dexter"
+  ],
+  "author": "Oscar Sanchez",
+  "license": "GPL-2.0-or-later",
+  "bugs": {
+    "url": "https://github.com/oscarssanchez/wp-dexter/issues"
+  },
+  "homepage": "https://github.com/oscarssanchez/wp-dexter#readme",
+  "devDependencies": {
+    "@wordpress/blocks": "^11.1.5",
+    "@wordpress/block-editor": "8.3.1",
+    "@wordpress/element": "4.2.1",
+    "@wordpress/components": "^19.1.6",
+    "@wordpress/i18n": "^4.19.0",
+    "@wordpress/scripts": "^19.2.2"
+  }
+}
