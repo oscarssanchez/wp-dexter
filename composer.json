@@ -7,11 +7,19 @@
         }
     ],
     "require": {
-        "php": ">=5.2"
+        "php": ">=5.2",
+        "10up/phpcs-composer": "dev-master"
+    },
+    "scripts": {
+        "lint": "phpcs dexter.php templates inc",
+        "lint-fix": "phpcbf dexter.php templates inc"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     },
     "require-dev": {
-        "wp-coding-standards/wpcs": "*",
-        "wimg/php-compatibility": "*",
-        "dealerdirect/phpcodesniffer-composer-installer": "^0.4.4"
+        "phpcompatibility/phpcompatibility-wp": "^2.1"
     }
 }
