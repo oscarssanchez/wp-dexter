@@ -63,5 +63,5 @@
       "padding": false
     }
   },
-  "editorScript": "file:../dist/index.js"
+  "editorScript": "file:../../dist/js/block.js"
 }
